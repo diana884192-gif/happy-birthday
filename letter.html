@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Letter for Egar 🤍</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            padding: 40px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            font-family: "Segoe UI", sans-serif;
+            color: #edf2ff;
+            background:
+                radial-gradient(circle at 15% 15%, #263b60 0, transparent 35%),
+                radial-gradient(circle at 85% 85%, #1c3152 0, transparent 35%),
+                linear-gradient(135deg, #080f20, #152440, #080f20);
+        }
+
+        #stars {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            color: #dce8ff;
+            animation: twinkle 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes twinkle {
+            from {
+                opacity: .25;
+                transform: scale(.7);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        .letter-card {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 680px;
+            padding: clamp(25px, 6vw, 50px);
+            border: 1px solid rgba(215, 227, 249, .35);
+            border-radius: 26px;
+            background: rgba(19, 32, 56, .92);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .35);
+            backdrop-filter: blur(12px);
+            animation: appear .9s ease both;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .label {
+            color: #b9c8e8;
+            text-align: center;
+            font-size: 11px;
+            letter-spacing: 4px;
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
+
+        h1 {
+            font-family: Georgia, serif;
+            font-size: clamp(30px, 6vw, 43px);
+            text-align: center;
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            color: #cbd8ef;
+            text-align: center;
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .divider {
+            width: 65px;
+            height: 2px;
+            margin: 0 auto 28px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                #dce8ff,
+                transparent
+            );
+        }
+
+        .letter-content {
+            color: #dce5f5;
+            font-size: 15px;
+            line-height: 2;
+            overflow-wrap: anywhere;
+        }
+
+        .letter-content p {
+            margin-bottom: 20px;
+        }
+
+        .letter-content .highlight {
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .signature {
+            margin-top: 28px;
+            color: #edf2ff;
+            font-family: Georgia, serif;
+            font-size: 20px;
+            line-height: 1.8;
+        }
+
+        .signature span {
+            color: #b9c8e8;
+            font-size: 14px;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        .next-button {
+            display: block;
+            width: fit-content;
+            max-width: 100%;
+            margin: 20px auto 0;
+            padding: 13px 25px;
+            border: 1px solid #dce8ff;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #dce8ff, #91a8d0);
+            color: #101a35;
+            font-size: 14px;
+            font-weight: 700;
+            text-align: center;
+            text-decoration: none;
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease;
+        }
+
+        .next-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(185, 200, 232, .2);
+        }
+
+        .back-button {
+            background: transparent;
+            color: #dce8ff;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 22px 12px;
+                align-items: flex-start;
+            }
+
+            .letter-card {
+                padding: 26px 20px;
+                border-radius: 20px;
+            }
+
+            .label {
+                font-size: 10px;
+                letter-spacing: 3px;
+            }
+
+            .letter-content {
+                font-size: 14px;
+                line-height: 1.9;
+            }
+
+            .letter-content p {
+                margin-bottom: 18px;
+            }
+
+            .next-button {
+                width: 100%;
+                padding: 12px 16px;
+                font-size: 13px;
+            }
+        }
+            #musicBtn {
+        display: block;
+        margin: 20px auto;
+        padding: 12px 24px;
+        border: 1px solid #dce8ff;
+        border-radius: 30px;
+        background: linear-gradient(135deg, #dce8ff, #91a8d0);
+        color: #101a35;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    </style>
+</head>
+
+<body>
+
+    <div id="stars"></div>
+
+    <main class="letter-card">
+    <button id="musicBtn">▶ Putar Musik 🤍</button>
+
+        <div class="label">A LETTER FROM MY HEART</div>
+
+        <h1>Untuk Sayang 🤍</h1>
+
+        <p class="subtitle">
+            Ada banyak hal yang mungkin nggak selalu bisa disampaikan,
+            jadi kali ini semuanya ditulis di sini.
+        </p>
+
+        <div class="divider"></div>
+
+        <div class="letter-content">
+
+            <p>Hai, sayang. 🤍</p>
+
+            <p>
+                <span class="highlight">Happy birthday, sayanggg! 🤍🤍</span>
+                Finally, hari spesial kamu datang juga.
+                Selamat bertambah usia, yaa, sayang.
+                Semoga di umur yang baru ini, kamu selalu dikasih
+                kesehatan, kebahagiaan, rezeki yang lancar,
+                dan semua hal baik yang selama ini kamu semogakan.
+                Semoga satu per satu wishlist dan impian kamu
+                bisa jadi kenyataan.
+            </p>
+
+            <p>
+                Sayang, makasih ya udah hadir di hidup ini
+                dan jadi bagian dari cerita yang begitu berarti.
+                Makasih buat semua momen kecil, tawa random,
+                obrolan nggak jelas, sampai hal-hal sederhana
+                yang ternyata bikin bahagia banget.
+                Mungkin buat orang lain itu biasa aja,
+                tapi buatku semuanya punya tempat spesial tersendiri.
+            </p>
+
+            <p>
+                Aku nggak tahu ke depannya bakal ada cerita apa lagi
+                buat kita. Pasti nggak semuanya bakal selalu gampang.
+                Kadang mungkin ada capeknya, ada salah pahamnya,
+                atau ada hari-hari yang bikin kita overthinking.
+                Tapi semoga kita bisa terus belajar buat saling ngerti,
+                saling jaga, dan nggak gampang nyerah sama hal-hal
+                yang masih bisa diperbaiki.
+            </p>
+
+            <p>
+                Buat semua hal yang lagi kamu perjuangin sekarang,
+                semoga jalannya dimudahin, yaa, sayang.
+                Kalau suatu hari kamu ngerasa capek banget,
+                inget kalau kamu udah sejauh ini dan itu bukan hal kecil.
+                Kamu nggak harus selalu kuat setiap waktu.
+                Istirahat kalau capek, cerita kalau ada yang mengganggu
+                pikiran, dan jangan terlalu keras sama diri sendiri.
+            </p>
+
+            <p>
+                Aku juga berharap semoga kamu selalu punya banyak
+                alasan buat bahagia. Semoga senyum kamu nggak gampang
+                hilang, hari-hari kamu dipenuhi hal baik,
+                dan kamu selalu dikelilingi orang-orang
+                yang tulus sayang sama kamu.
+            </p>
+
+            <p>
+                And one more thing, sayang.
+                Jangan lupa kalau kamu itu berharga, yaa.
+                Kamu nggak harus jadi sempurna buat pantas dapetin
+                hal-hal baik. Jadi diri kamu sendiri aja,
+                terus tumbuh jadi versi terbaik kamu.
+                Pelan-pelan juga nggak apa-apa.
+            </p>
+
+            <p>
+                Sekali lagi, <span class="highlight">happy birthday, sayangku. 🤍</span>
+                Semoga tahun ini jadi chapter baru yang jauh lebih
+                indah buat kamu. Semoga lebih banyak tawa daripada
+                sedihnya, lebih banyak kabar baik daripada
+                overthinking-nya, dan lebih banyak hal yang bikin
+                kamu bilang, "ternyata hidup bisa seindah ini, ya."
+            </p>
+
+            <p>
+                Thank you for being you, sayang.
+                Semoga masih banyak ulang tahun berikutnya
+                yang bisa dirayain dengan penuh bahagia.
+                Semoga kenangan-kenangan kecil kita nanti jadi
+                cerita yang selalu bikin senyum kalau diingat lagi.
+            </p>
+
+            <p class="highlight">
+                Happy birthday, my favorite person.
+                I’m always wishing the best for you. 🤍
+            </p>
+
+        </div>
+
+        <div class="signature">
+            With lots of love,
+            <br>
+            Nurdiana Arifah 🤍
+            <br>
+            <span>Someone who wishes you all the best.</span>
+        </div>
+
+        <a href="surprise.html" class="next-button">
+            ✨ Buka Kejutan Terakhir 🤍
+        </a>
+
+        <a href="index.html" class="next-button back-button">
+            ↶ Kembali ke Awal
+        </a>
+
+    </main>
+
+    <script>
+        const stars = document.getElementById("stars");
+
+        for (let i = 0; i < 90; i++) {
+            const star = document.createElement("span");
+
+            star.className = "star";
+            star.textContent = "✦";
+            star.style.left = Math.random() * 100 + "vw";
+            star.style.top = Math.random() * 100 + "vh";
+            star.style.fontSize = (6 + Math.random() * 10) + "px";
+            star.style.animationDuration =
+                (1.5 + Math.random() * 3) + "s";
+            star.style.animationDelay = Math.random() * 3 + "s";
+
+            stars.appendChild(star);
+        }
+    </script>
+
+    <!-- Musik halaman Letter -->
+    <script src="js/music.js"></script>
+    
+<script>
+    const musicBtn = document.getElementById("musicBtn");
+
+    musicBtn.addEventListener("click", async () => {
+        const musik = document.getElementById("backgroundMusic");
+        if (!musik) return;
+
+        if (musik.paused) {
+            try {
+                await musik.play();
+                musicBtn.textContent = "⏸ Jeda Musik 🤍";
+            } catch (error) {
+                musicBtn.textContent = "Gagal memutar musik";
+            }
+        } else {
+            musik.pause();
+            musicBtn.textContent = "▶ Putar Musik 🤍";
+        }
+    });
+</script>
+
+
+</body>
+</html>

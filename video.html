@@ -1,0 +1,403 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Little Memories 🤍</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        body.video-page {
+            color: #edf2ff;
+        }
+
+        .video-header {
+            text-align: center;
+            padding: 55px 20px 35px;
+        }
+
+        .video-header .eyebrow {
+            color: #aebfdf;
+            letter-spacing: 4px;
+            font-size: 11px;
+            margin-bottom: 15px;
+        }
+
+        .video-header h1 {
+            color: #edf2ff;
+            font-family: Georgia, serif;
+            font-size: clamp(30px, 5vw, 44px);
+            margin-bottom: 15px;
+        }
+
+        .video-header p {
+            color: #d3deef;
+            line-height: 1.9;
+            font-size: 14px;
+        }
+
+        .video-list {
+            width: min(1150px, 92%);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .video-card {
+            min-width: 0;
+            padding: 15px;
+            background: #414d66;
+            color: #f1f5ff;
+            border: 1px solid rgba(220, 232, 255, .3);
+            border-radius: 20px;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, .18);
+            overflow: hidden;
+            transition: transform .25s ease, border-color .25s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-4px);
+            border-color: #dce8ff;
+        }
+
+        .video-card video {
+            display: block;
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            object-fit: contain;
+            background: #080f20;
+            border-radius: 13px;
+        }
+
+        .video-card .video-number {
+            display: block;
+            color: #c7d7f2;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .video-card h2 {
+            color: #ffffff;
+            font-family: Georgia, serif;
+            font-size: 19px;
+            text-align: center;
+            line-height: 1.5;
+            margin: 8px 0;
+        }
+
+        .video-card p {
+            color: #e0e7f4;
+            font-size: 13px;
+            line-height: 1.8;
+            text-align: center;
+            margin: 0 2px 5px;
+        }
+
+        .video-divider {
+            width: 45px;
+            height: 2px;
+            margin: 12px auto;
+            background: #a9bbdc;
+        }
+
+        .ending-text {
+            max-width: 700px;
+            margin: 60px auto 0;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .ending-text h2 {
+            color: #edf2ff;
+            font-family: Georgia, serif;
+            margin-bottom: 14px;
+        }
+
+        .ending-text p {
+            color: #d3deef;
+            font-size: 14px;
+            line-height: 1.9;
+        }
+
+        .video-navigation {
+            text-align: center;
+            margin: 15px 16px 55px;
+        }
+
+        .video-navigation a {
+            display: inline-block;
+            padding: 13px 25px;
+            border: 1px solid #dce8ff;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #dce8ff, #91a8d0);
+            color: #101a35;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform .25s ease;
+        }
+
+        .video-navigation a:hover {
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 800px) {
+            .video-list {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .video-header {
+                padding: 35px 18px 25px;
+            }
+
+            .video-list {
+                width: 91%;
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .video-card {
+                padding: 13px;
+            }
+
+            .video-card video {
+                max-height: 520px;
+            }
+        }
+        #musicBtn {
+        display: block;
+        margin: 20px auto 30px;
+    }
+    </style>
+</head>
+
+<body class="video-page">
+
+    <section class="video-header">
+        <p class="eyebrow">OUR LITTLE MEMORIES</p>
+        <h1>Video Kenangan Kita 🤍</h1>
+        <p>
+            Kalau suatu hari kita kangen sama hari-hari ini,
+            tinggal putar lagi videonya.
+            <br>
+            Karena momen sederhana sama kamu pun punya cerita sendiri. ✦
+        </p>
+    </section>
+
+    
+    <button id="musicBtn" type="button">♫ Putar Musik ♫</button>
+    <audio id="backgroundMusic" preload="none" loop></audio>
+
+    <section class="video-list" id="videoList"></section>
+
+    <section class="ending-text">
+        <h2>Little moments, big memories. 🤍</h2>
+        <p>
+            Mungkin buat orang lain ini cuma video biasa,
+            tapi buat kita ada cerita yang nggak bisa diulang persis sama.
+            Makasih sudah jadi bagian dari banyak momen berharga ini.
+        </p>
+    </section>
+
+    <div class="video-navigation">
+        <a href="timeline.html">Lanjut ke Timeline ✦</a>
+    </div>
+
+    <script>
+        const daftarVideo = [];
+
+        // Video bernomor yang tersedia di folder.
+        // File 36.mp4 tidak terlihat di folder, jadi dilewati.
+        for (let nomor = 2; nomor <= 61; nomor++) {
+            if (nomor !== 36) {
+                daftarVideo.push(nomor + ".mp4");
+            }
+        }
+
+        // Video tambahan dengan nama khusus.
+        daftarVideo.push(
+            "v1.mp4",
+            "VID-20251227-WA0099.mp4",
+            "y.mp4",
+            "y1.mp4",
+            "y2.mp4",
+            "y3.mp4",
+            "y4.mp4",
+            "y5.mp4",
+            "y6.mp4",
+            "y7.mp4"
+        );
+
+        // Judul dan caption dibuat bergantian agar setiap kartu
+        // tetap punya tulisan yang manis dan tidak kaku.
+        const ceritaVideo = [
+            {
+                judul: "Awal dari Banyak Cerita",
+                teks: "Satu momen kecil yang bakal punya tempat sendiri di ingatan. 🤍"
+            },
+            {
+                judul: "Dunia Berasa Milik Kita",
+                teks: "Nggak perlu sempurna, yang penting ada kamu di ceritanya."
+            },
+            {
+                judul: "My Favorite Person",
+                teks: "Kalau ditanya bagian favoritnya? Ya orang yang ada di video ini."
+            },
+            {
+                judul: "Random but Precious",
+                teks: "Kelihatannya random, tapi nanti bisa jadi hal yang paling dikangenin."
+            },
+            {
+                judul: "Kita dengan Cara Kita",
+                teks: "Nggak harus kayak pasangan lain, cerita kita punya cara sendiri."
+            },
+            {
+                judul: "Senyum yang Disimpan",
+                teks: "Semoga nanti pas diputar lagi, senyumnya masih sama. ✨"
+            },
+            {
+                judul: "Main Character Kita",
+                teks: "Bukan film, tapi dua orang yang punya banyak cerita sendiri."
+            },
+            {
+                judul: "Momen Favorit",
+                teks: "Kadang momen paling berharga justru datang tanpa direncanakan."
+            },
+            {
+                judul: "Just Us Two",
+                teks: "Di tengah ramainya dunia, ada cerita kecil tentang kita."
+            },
+            {
+                judul: "Kangen Mode On",
+                teks: "Kalau kangen lagi, tinggal putar. Lumayan buat ngobatin rindu. 🤍"
+            },
+            {
+                judul: "Our Little Universe",
+                teks: "Dunia kita mungkin sederhana, tapi ceritanya nggak sederhana."
+            },
+            {
+                judul: "Bukti Pernah Sebahagia Ini",
+                teks: "Semoga saat melihatnya lagi, kita ingat betapa berharganya momen ini."
+            },
+            {
+                judul: "Nggak Harus Selalu Perfect",
+                teks: "Yang penting nyata, ada ceritanya, dan punya kita."
+            },
+            {
+                judul: "Satu Video, Banyak Rasa",
+                teks: "Ada senyum, ada cerita, ada rasa yang susah dijelasin."
+            },
+            {
+                judul: "My Safe Place",
+                teks: "Semoga kita selalu bisa jadi tempat nyaman satu sama lain."
+            },
+            {
+                judul: "Kalau Waktu Bisa Diulang",
+                teks: "Kayaknya momen ini bakal tetap jadi salah satu yang pengin diulang."
+            },
+            {
+                judul: "Kita Pernah di Sini",
+                teks: "Simpan baik-baik, siapa tahu nanti jadi kenangan paling dirindukan."
+            },
+            {
+                judul: "Simple Days, Happy Hearts",
+                teks: "Nggak harus mahal atau mewah, asal bareng orang yang tepat."
+            },
+            {
+                judul: "My Favorite Memory",
+                teks: "Salah satu potongan cerita yang bikin perjalanan ini terasa spesial."
+            },
+            {
+                judul: "Cerita yang Nggak Ada Ending",
+                teks: "Videonya mungkin selesai, tapi semoga cerita kita terus lanjut."
+            }
+        ];
+
+        const videoList = document.getElementById("videoList");
+
+        daftarVideo.forEach((namaFile, index) => {
+            const cerita = ceritaVideo[index % ceritaVideo.length];
+
+            const kartu = document.createElement("article");
+            kartu.className = "video-card";
+
+            const video = document.createElement("video");
+            video.controls = true;
+            video.playsInline = true;
+            video.preload = "metadata";
+
+            const source = document.createElement("source");
+            source.src = "videos/" + namaFile;
+            source.type = "video/mp4";
+            video.appendChild(source);
+
+            const nomor = document.createElement("span");
+            nomor.className = "video-number";
+            nomor.textContent = "MEMORY " + String(index + 1).padStart(2, "0");
+
+            const judul = document.createElement("h2");
+            judul.textContent = cerita.judul;
+
+            const garis = document.createElement("div");
+            garis.className = "video-divider";
+
+            const caption = document.createElement("p");
+            caption.textContent = cerita.teks;
+
+            kartu.append(video, nomor, judul, garis, caption);
+            videoList.appendChild(kartu);
+        });
+    </script>
+
+    
+<!-- Musik berhenti saat video diputar -->
+<script>
+    const semuaVideo = document.querySelectorAll(".video-card video");
+
+    semuaVideo.forEach(video => {
+        video.addEventListener("play", () => {
+            const musik = window.parent.document
+                ? document.getElementById("backgroundMusic")
+                : null;
+
+            if (musik) {
+                musik.pause();
+            }
+        });
+    });
+</script>
+
+
+    <script src="js/music.js"></script>
+    
+<script>
+const musik = document.getElementById("backgroundMusic");
+const tombolMusik = document.getElementById("musicBtn");
+
+musik.src = "./music/tunggal-eka.mp3";
+musik.volume = 0.5;
+
+tombolMusik.addEventListener("click", async () => {
+    if (musik.paused) {
+        try {
+            await musik.play();
+            tombolMusik.textContent = "♫ Matikan Musik ♫";
+        } catch {
+            alert("Musik gagal diputar. Periksa lokasi file musik.");
+        }
+    } else {
+        musik.pause();
+        tombolMusik.textContent = "♫ Putar Musik ♫";
+    }
+});
+</script>
+
+
+</body>
+</html>

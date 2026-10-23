@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Egar's World | Birthday Journey</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: Georgia, serif;
+            color: #f4f6ff;
+            background:
+                radial-gradient(circle at 75% 20%, #34466b 0%, transparent 28%),
+                radial-gradient(circle at 15% 80%, #263a60 0%, transparent 35%),
+                linear-gradient(135deg, #050914, #101c37 55%, #050914);
+        }
+
+        .stars {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                radial-gradient(2px 2px at 10% 20%, white 99%, transparent),
+                radial-gradient(1px 1px at 30% 70%, white 99%, transparent),
+                radial-gradient(2px 2px at 70% 30%, #dce8ff 99%, transparent),
+                radial-gradient(1px 1px at 90% 60%, white 99%, transparent),
+                radial-gradient(2px 2px at 50% 15%, #dce8ff 99%, transparent),
+                radial-gradient(1px 1px at 20% 90%, white 99%, transparent),
+                radial-gradient(1px 1px at 80% 85%, white 99%, transparent);
+            background-size: 300px 300px;
+            animation: twinkle 5s ease-in-out infinite alternate;
+        }
+
+        @keyframes twinkle {
+            from { opacity: .45; }
+            to { opacity: 1; }
+        }
+
+        .moon {
+            position: absolute;
+            top: 9%;
+            right: 13%;
+            width: 115px;
+            height: 115px;
+            border-radius: 50%;
+            background: #edf2ff;
+            box-shadow: 0 0 35px #dce6ff99, 0 0 90px #8da9e455;
+        }
+
+        .welcome {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .welcome-card {
+            width: min(100%, 650px);
+            padding: 55px 30px;
+            border: 1px solid #dce6ff70;
+            border-radius: 28px;
+            background: linear-gradient(
+                145deg,
+                rgba(255,255,255,.12),
+                rgba(15,28,55,.48)
+            );
+            box-shadow: 0 0 60px #6f91ce18;
+            backdrop-filter: blur(12px);
+            animation: appear 1.2s ease both;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(22px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .eyebrow {
+            color: #c4d2f2;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+        }
+
+        h1 {
+            font-size: clamp(35px, 8vw, 62px);
+            font-weight: normal;
+            line-height: 1.2;
+        }
+
+        h2 {
+            margin-top: 8px;
+            font-size: clamp(28px, 6vw, 43px);
+            font-weight: normal;
+            color: #dce5fa;
+            text-shadow: 0 0 22px #c3d7ff50;
+        }
+
+        .divider {
+            width: 75px;
+            height: 1px;
+            margin: 27px auto;
+            background: #dce6ff;
+        }
+
+        .description {
+            color: #d2dcf2;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.9;
+        }
+
+        #enterBtn {
+            margin-top: 32px;
+            padding: 15px 30px;
+            border: 1px solid #e0e8ff;
+            border-radius: 40px;
+            background: linear-gradient(135deg, #dbe5fa, #8299c9);
+            color: #101a30;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .3s ease;
+        }
+
+        #enterBtn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 28px #c9d9ff70;
+        }
+
+        .music-note {
+            margin-top: 14px;
+            color: #dce6ff;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            font-style: italic;
+            line-height: 1.7;
+            opacity: .9;
+        }
+
+        .footer-note {
+            margin-top: 27px;
+            color: #aabbdc;
+            font-size: 13px;
+            font-style: italic;
+        }
+
+        @media (max-width: 480px) {
+            .moon {
+                width: 75px;
+                height: 75px;
+                top: 7%;
+                right: 8%;
+            }
+
+            .welcome-card {
+                padding: 45px 20px;
+            }
+
+            .eyebrow {
+                letter-spacing: 3px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="stars"></div>
+    <div class="moon"></div>
+
+    <!-- Musik latar -->
+    <audio id="backgroundMusic" loop preload="auto"></audio>
+
+    <main class="welcome">
+        <section class="welcome-card">
+            <p class="eyebrow">A little universe made for you</p>
+
+            <h1>Welcome to</h1>
+            <h2>Egar's World ♡</h2>
+
+            <div class="divider"></div>
+
+            <p class="description">
+                A Birthday Journey<br>
+                Made with Love, Just for You.
+            </p>
+
+            <button id="enterBtn">✦ Mulai Perjalanan ✦</button>
+
+            <p class="music-note">
+                ♫ Wajib diklik, pokoknya harus dengerin pakai lagu! ♫
+            </p>
+
+            <p class="footer-note">
+                Every little star reminds me of you.
+            </p>
+        </section>
+    </main>
+
+    <script src="js/script.js"></script>
+    <script src="js/music.js"></script>
+</body>
+</html>

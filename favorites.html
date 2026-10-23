@@ -1,0 +1,486 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Egar's Favorites</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .favorites-title {
+            color: #edf2ff;
+            text-align: center;
+            font-family: Georgia, serif;
+            font-size: clamp(28px, 5vw, 40px);
+            margin-bottom: 15px;
+        }
+
+        .favorites-intro {
+            color: #c5d2eb;
+            text-align: center;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto 25px;
+        }
+
+        .category {
+            color: #dce8ff;
+            text-align: center;
+            font-family: Georgia, serif;
+            font-size: clamp(22px, 4vw, 28px);
+            margin: 45px 0 25px;
+        }
+
+        .foods {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 22px;
+            align-items: start;
+        }
+
+        .food-card {
+            cursor: pointer;
+            overflow: hidden;
+            padding: 18px;
+            border: 1px solid rgba(220,232,255,.3);
+            border-radius: 20px;
+            background: #414d66;
+            box-shadow: 0 10px 28px rgba(0,0,0,.15);
+            transition: .3s ease;
+        }
+
+        .food-card:hover,
+        .food-card.active {
+            transform: translateY(-4px);
+            border-color: #dce8ff;
+            box-shadow: 0 10px 30px rgba(145,168,208,.2);
+        }
+
+        .food-number {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            border: 1px solid #aabbd9;
+            border-radius: 50%;
+            color: #edf2ff;
+            font-family: Georgia, serif;
+        }
+
+        .food-photo {
+            display: block;
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 13px;
+            margin-bottom: 18px;
+            background: #172440;
+        }
+
+        .food-card h3 {
+            color: #edf2ff;
+            text-align: center;
+            margin-bottom: 12px;
+            font-family: Georgia, serif;
+            font-size: 20px;
+        }
+
+        .popup-message {
+            display: none;
+            color: #e0e8f8;
+            font-size: 14px;
+            line-height: 1.9;
+            padding: 12px 2px 2px;
+        }
+
+        .food-card.active .popup-message {
+            display: block;
+            animation: messageAppear .35s ease;
+        }
+
+        @keyframes messageAppear {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #musicBtn {
+            display: block;
+            margin: 0 auto 28px;
+            padding: 11px 22px;
+            border: 1px solid #dce8ff;
+            border-radius: 30px;
+            background: rgba(220,232,255,.12);
+            color: #edf2ff;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .25s ease;
+        }
+
+        #musicBtn:hover {
+            transform: translateY(-2px);
+            background: rgba(220,232,255,.22);
+        }
+
+        #nextBtn {
+            display: block;
+            margin: 45px auto 20px;
+            padding: 14px 28px;
+            border: 1px solid #dce8ff;
+            border-radius: 30px;
+            background: linear-gradient(135deg,#dce8ff,#91a8d0);
+            color: #101a35;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .25s ease;
+        }
+
+        #nextBtn:hover {
+            transform: translateY(-3px);
+        }
+
+        .container.fade-out {
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity .8s ease, transform .8s ease;
+        }
+
+        .sparkle {
+            position: fixed;
+            z-index: 9999;
+            color: #dce8ff;
+            pointer-events: none;
+            animation: sparkleFloat 1.5s ease-out forwards;
+        }
+
+        @keyframes sparkleFloat {
+            from {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-80px) scale(1.5);
+            }
+        }
+
+        @media (max-width: 800px) {
+            .foods {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 15px;
+            }
+
+            .food-card {
+                padding: 12px;
+            }
+
+            .food-photo {
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .foods {
+                grid-template-columns: 1fr;
+            }
+
+            .food-photo {
+                height: 200px;
+            }
+
+            .favorites-intro {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div id="stars"></div>
+
+<div class="container">
+    <h1 class="favorites-title">Semua Favorit kamu CINTAKU</h1>
+
+    <p class="favorites-intro">
+        Aku selalu berusaha mengingat hal-hal kecil tentangmu.
+        Karena bagiku itu sangat berarti. 🤍
+    </p>
+
+    <button id="musicBtn" type="button">♫ Putar Musik ♫</button>
+    <audio id="backgroundMusic" loop preload="none"></audio>
+
+    <h2 class="category">Makanan Favorit</h2>
+    <div class="foods">
+
+        <div class="food-card active">
+            <div class="food-number">01</div>
+            <img class="food-photo" src="images/favorites/bakso.jpeg" alt="Bakso">
+            <h3>Bakso</h3>
+            <div class="popup-message">
+                Salah satu makanan yang kayaknya selalu jadi pilihan kita: bakso 😭.
+                Sekarang kita lagi LDR Madura-Bali, jadi belum bisa makan bareng dulu.
+                Tapi nanti kalau udah ketemu, kita makan bakso bareng lagi ya sayang.
+                Udah kangen juga rasanya makan sambil ngobrol langsung sama kamu. 🤍
+            </div>
+        </div>
+
+        <div class="food-card">
+            <div class="food-number">02</div>
+            <img class="food-photo" src="images/favorites/nasi goreng.jpeg" alt="Nasi Goreng">
+            <h3>Nasi Goreng</h3>
+            <div class="popup-message">
+                Kalau yang satu ini, kayaknya nanti harus masuk list makanan yang kita coba bareng
+                soalnya ini salah satu makanan yang kamu suka.
+                Belum pernah makan nasi goreng bareng soalnya 😭.
+                Jadi kalau suatu saat kita udah ketemu, boleh nih cari nasi goreng yang enak terus makan bareng.
+                Dari Madura sampai Bali jauh juga, tapi semoga nanti bisa sampai di satu meja yang sama ya sayang. 🤍
+            </div>
+        </div>
+
+        <div class="food-card">
+            <div class="food-number">03</div>
+            <img class="food-photo" src="images/favorites/sate.jpeg" alt="Sate Panggang">
+            <h3>Sate Panggang</h3>
+            <div class="popup-message">
+                Sate panggang juga masuk salah satu makanan yang belum pernah kita makan bareng.
+                Jadi nanti kalau udah ketemu, kita cobain ya.
+                Penasaran juga, bakal jadi makanan favorit kita berdua atau malah biasa aja 😭😂
+            </div>
+        </div>
+    </div>
+
+    <h2 class="category">Minuman Favorit</h2>
+    <div class="foods">
+
+        <div class="food-card">
+            <div class="food-number">04</div>
+            <img class="food-photo" src="images/favorites/air.jpeg" alt="Air Putih">
+            <h3>Air Putih</h3>
+            <div class="popup-message">
+                Air putih masuk daftar minuman favorit? 😭😂 Ini mah bukan minuman favorit,
+                ini kebutuhan hidup wkwk. Tapi gapapa, ternyata untuk urusan minuman kamu sesimpel itu.
+                Nggak perlu yang aneh-aneh, air putih aja udah cukup. 😭💧
+            </div>
+        </div>
+
+        <div class="food-card">
+            <div class="food-number">05</div>
+            <img class="food-photo" src="images/favorites/Floridina.jpeg" alt="Floridina">
+            <h3>Floridina</h3>
+            <div class="popup-message">
+                Nah kalau yang ini baru jelas, Floridina memang punya tempat sendiri 😭😂.
+                Apalagi kalau soal rasa jeruk, ini udah masuk kategori favorit banget buat aku juga.
+                Berarti kalau suatu saat kita lagi bingung mau beli minuman apa, kemungkinan besar
+                kita bakal sama-sama ngambil yang ini wkwk. Ternyata urusan minuman kita ada yang satu selera juga. 🤍
+            </div>
+        </div>
+
+        <div class="food-card">
+            <div class="food-number">06</div>
+            <img class="food-photo" src="images/favorites/Milk  Nata De Coco.jpeg" alt="Milk Nata de Coco">
+            <h3>Milk Nata de Coco</h3>
+            <div class="popup-message">
+                Milk Nata de Coco ternyata masuk juga ke daftar favoritmu.
+                Aku nggak tahu kenapa kamu bisa sesuka itu sama minuman yang ada nata de coconya 😭😂.
+                Tapi yaudah, kalau nanti kita lagi jalan dan kamu tiba-tiba ngajak beli ini,
+                sekarang aku udah nggak bisa pura-pura bingung lagi. Udah tahu pilihanmu. Wkwk.
+            </div>
+        </div>
+
+        <div class="food-card">
+            <div class="food-number">07</div>
+            <img class="food-photo" src="images/favorites/es campur.jpeg" alt="Es Campur">
+            <h3>Es Campur</h3>
+            <div class="popup-message">
+                Es campur? 😭😂 Dari namanya aja udah campur, sama kayak pikiran aku kalau lagi kangen kamu wkwk.
+                Tapi serius, nanti kalau kita udah ketemu, aku mau nyobain es campur bareng kamu.
+                Duduk berdua, cerita tentang banyak hal yang selama ini cuma bisa kita ceritain lewat chat,
+                terus menikmati es campur sampai habis. Kayaknya sederhana, tapi kalau sama kamu pasti jadi
+                salah satu momen yang bakal aku inget. 🤍
+            </div>
+        </div>
+
+        <div class="food-card">
+            <div class="food-number">08</div>
+            <img class="food-photo" src="images/favorites/es teh.jpeg" alt="Es Teh">
+            <h3>Es Teh</h3>
+            <div class="popup-message">
+                🧊🍵 Es teh juga salah satu minuman yang kayaknya nggak pernah salah pilih 😭.
+                Apalagi kalau diminum pas lagi makan. Tapi nanti kalau kita udah ketemu,
+                kayaknya seru juga kalau kita duduk bareng, makan, terus masing-masing punya es teh sendiri.
+                Nggak perlu yang aneh-aneh, yang penting bisa makan dan ngobrol langsung lagi sama kamu, sayang. 🤍
+            </div>
+        </div>
+    </div>
+
+    <h2 class="category">Camilan Favorit</h2>
+    <div class="foods">
+
+        <div class="food-card">
+            <div class="food-number">09</div>
+            <img class="food-photo" src="images/favorites/donat.jpeg" alt="Donat">
+            <h3>Donat</h3>
+            <div class="popup-message">
+                Donat juga masuk salah satu cemilan favoritmu.
+                Kalau aku sendiri sebenarnya nggak terlalu suka donat,
+                kecuali yang cokelatnya banyak 🍫😭.
+                Jadi kalau suatu saat kita beli donat bareng, kayaknya kita harus pilih yang sama-sama kita suka.
+                Tapi kalau kamu mau pilih yang banyak mesesnya, yaudah… kali ini aku biarin wkwk. 🤍
+            </div>
+        </div>
+
+        <div class="food-card">
+            <div class="food-number">10</div>
+            <img class="food-photo" src="images/favorites/kue lapis.jpeg" alt="Kue Lapis">
+            <h3>Kue Lapis</h3>
+            <div class="popup-message">
+                Kue lapis juga salah satu cemilan favoritmu.
+                Lucunya, kalau lagi sama aku, kamu biasanya lebih sering ikut makan apa yang aku mau
+                atau yang kita sama-sama suka 😭. Tapi kalau yang ini kayaknya aku harus ngalah deh,
+                soalnya aku nggak terlalu suka kue lapis wkwk.
+                Jadi nanti kalau kamu pengen kue lapis, kamu makan sendiri dulu yaa.
+                Tapi kalau aku tiba-tiba bilang mau coba, berarti kamu boleh bagi sedikit 😂🤍
+            </div>
+        </div>
+
+        <div class="food-card">
+            <div class="food-number">11</div>
+            <img class="food-photo" src="images/favorites/kerupuk.jpeg" alt="Kerupuk">
+            <h3>Kerupuk</h3>
+            <div class="popup-message">
+                Kerupuk juga masuk daftar cemilan favoritmu.
+                Tapi jujur ya, kalau soal kerupuk kamu tuh vibes-nya udah kayak bapak-bapak banget 😭😂.
+                Makan apa pun kayaknya kurang lengkap kalau nggak ada kerupuknya.
+                Tapi gapapa, justru lucu aja lihat kamu sesuka itu sama kerupuk.
+                Nanti kalau kita makan bareng, aku udah tahu satu hal yang nggak boleh ketinggalan:
+                kerupuk buat kamu. Wkwk. 🤍
+            </div>
+        </div>
+
+        <div class="food-card">
+            <div class="food-number">12</div>
+            <img class="food-photo" src="images/favorites/popcron.jpeg" alt="Popcorn">
+            <h3>Popcorn</h3>
+            <div class="popup-message">
+                Popcorn juga kamu suka? 😭😂 Aku mulai curiga kamu sebenarnya nggak punya cemilan yang nggak kamu suka deh.
+                Tapi yaudah, yang ini aku ngerti sih. Popcorn tuh tipe cemilan yang awalnya cuma mau makan sedikit,
+                tahu-tahu udah habis satu bungkus. Nanti kalau kita makan bareng,
+                jangan sampai aku baru ambil satu terus kamu udah habisin semuanya ya wkwk. 🤍
+            </div>
+        </div>
+
+        <div class="food-card">
+            <div class="food-number">13</div>
+            <img class="food-photo" src="images/favorites/usus mercon.jpeg" alt="Usus Mercon">
+            <h3>Usus Mercon</h3>
+            <div class="popup-message">
+                Usus mercon juga salah satu yang kamu suka.
+                Kalau aku sendiri sebenarnya nggak terlalu suka ususnya,
+                tapi kalau soal pedas jangan ditanya lagi 😭🌶️.
+                Aku malah suka banget sama makanan pedas.
+                Jadi kalau nanti kita makan ini bareng, kamu bisa fokus sama ususnya,
+                aku fokus sama level pedasnya wkwk. Tapi jangan sok kuat ya kalau ternyata aku yang tahan lebih lama 😂🤍
+            </div>
+        </div>
+
+        <div class="food-card">
+            <div class="food-number">14</div>
+            <img class="food-photo" src="images/favorites/makaroni balado.jpeg" alt="Makroni Balado">
+            <h3>Makroni Balado</h3>
+            <div class="popup-message">
+                🌶️ Makroni balado ini kamu suka, tapi aku kurang suka 😭.
+                Aku tuh kalau soal rasa agak pilih-pilih, kalau manis ya manis, kalau asin ya asin.
+                Tapi kamu kan biasanya kalau lagi sama aku suka ngikutin apa yang aku mau wkwk.
+                Jadi kalau nanti kita beli cemilan dan aku nggak mau makaroni balado,
+                kamu bakal ikut cari yang lain juga nggak nih? 😂 Tapi gapapa sih,
+                sesekali kamu pilih makanan favoritmu sendiri. 🤍
+            </div>
+        </div>
+    </div>
+
+    <button id="nextBtn" type="button">Lanjut Perjalanan</button>
+</div>
+
+<script src="js/favorites.js"></script>
+
+<script>
+(() => {
+    const musicBtn = document.getElementById("musicBtn");
+    const backgroundMusic = document.getElementById("backgroundMusic");
+
+    if (musicBtn && backgroundMusic) {
+        backgroundMusic.src = "./music/bersenja-gurau.mp3";
+        backgroundMusic.loop = true;
+        backgroundMusic.volume = 0.5;
+
+        musicBtn.addEventListener("click", async () => {
+            if (backgroundMusic.paused) {
+                musicBtn.textContent = "♫ Memuat Musik... ♫";
+
+                try {
+                    await backgroundMusic.play();
+                    musicBtn.textContent = "♫ Matikan Musik ♫";
+                } catch (error) {
+                    console.error("Musik gagal diputar:", error);
+                    musicBtn.textContent = "♫ Putar Musik ♫";
+                    alert("Musik gagal diputar. Periksa nama file dan folder musik.");
+                }
+            } else {
+                backgroundMusic.pause();
+                musicBtn.textContent = "♫ Putar Musik ♫";
+            }
+        });
+    }
+
+    const cards = document.querySelectorAll(".food-card");
+
+    cards.forEach(card => {
+        card.addEventListener("click", () => {
+            const wasActive = card.classList.contains("active");
+
+            cards.forEach(item => item.classList.remove("active"));
+
+            if (!wasActive) {
+                card.classList.add("active");
+            }
+
+            const sparkle = document.createElement("span");
+            sparkle.className = "sparkle";
+            sparkle.textContent = "✦";
+            sparkle.style.left =
+                (card.getBoundingClientRect().left + card.offsetWidth / 2) + "px";
+            sparkle.style.top =
+                (card.getBoundingClientRect().top + 30) + "px";
+
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 1500);
+        });
+    });
+
+    const nextBtn = document.getElementById("nextBtn");
+
+    if (nextBtn) {
+        nextBtn.addEventListener("click", () => {
+            document.querySelector(".container").classList.add("fade-out");
+
+            setTimeout(() => {
+                window.location.href = "gallery.html";
+            }, 800);
+        });
+    }
+})();
+</script>
+
+</body>
+</html>

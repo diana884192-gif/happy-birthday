@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hai Kak 🤍 | Egar's World</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: Georgia, serif;
+            color: #f4f6ff;
+            background:
+                radial-gradient(circle at 20% 20%, #34466b 0%, transparent 30%),
+                radial-gradient(circle at 80% 80%, #263a60 0%, transparent 35%),
+                linear-gradient(135deg, #050914, #152443, #050914);
+        }
+
+        .stars {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                radial-gradient(2px 2px at 10% 20%, white 99%, transparent),
+                radial-gradient(1px 1px at 30% 70%, white 99%, transparent),
+                radial-gradient(2px 2px at 70% 30%, #dce8ff 99%, transparent),
+                radial-gradient(1px 1px at 90% 60%, white 99%, transparent),
+                radial-gradient(2px 2px at 50% 15%, #dce8ff 99%, transparent);
+            background-size: 300px 300px;
+            animation: twinkle 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes twinkle {
+            from { opacity: .4; }
+            to { opacity: 1; }
+        }
+
+        .moon {
+            position: absolute;
+            top: 9%;
+            right: 12%;
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            background: #edf2ff;
+            box-shadow: 0 0 35px #dce6ff99;
+        }
+
+        .welcome {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .welcome-card {
+            width: min(100%, 620px);
+            padding: 55px 30px;
+            text-align: center;
+            border: 1px solid #dce6ff70;
+            border-radius: 28px;
+            background: rgba(10, 21, 43, .72);
+            box-shadow: 0 0 60px #6f91ce22;
+            backdrop-filter: blur(12px);
+            animation: appear 1s ease both;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .eyebrow {
+            margin-bottom: 20px;
+            color: #c4d2f2;
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: clamp(36px, 8vw, 57px);
+            font-weight: normal;
+        }
+
+        .description {
+            margin-top: 22px;
+            color: #d2dcf2;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.9;
+        }
+
+        .divider {
+            width: 70px;
+            height: 1px;
+            margin: 25px auto;
+            background: #dce6ff;
+        }
+
+        #startBtn {
+            margin-top: 28px;
+            padding: 15px 28px;
+            border: 1px solid #e0e8ff;
+            border-radius: 40px;
+            background: linear-gradient(135deg, #dbe5fa, #8299c9);
+            color: #101a30;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .3s ease;
+        }
+
+        #startBtn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px #c9d9ff70;
+        }
+
+        #startBtn:disabled {
+            cursor: wait;
+            opacity: .7;
+        }
+
+        .music-note {
+            margin-top: 14px;
+            color: #dce6ff;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            font-style: italic;
+            line-height: 1.7;
+        }
+
+        .closing {
+            margin-top: 28px;
+            color: #aabbdc;
+            font-size: 13px;
+            font-style: italic;
+        }
+
+        .welcome-card.hide {
+            opacity: 0;
+            transform: scale(.95);
+            transition: .7s ease;
+        }
+
+        .heart {
+            position: fixed;
+            top: -40px;
+            z-index: 5;
+            color: #e2eaff;
+            pointer-events: none;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcome-card {
+                padding: 45px 20px;
+            }
+
+            .eyebrow {
+                letter-spacing: 2px;
+            }
+
+            .moon {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="stars"></div>
+    <div class="moon"></div>
+
+    <audio id="backgroundMusic" loop preload="auto"></audio>
+
+    <main class="welcome">
+        <section class="welcome-card" id="welcomeBox">
+            <p class="eyebrow">A special message for you</p>
+
+            <h1>Hai SAYANGKUU... ♡</h1>
+
+            <div class="divider"></div>
+
+            <p class="description">
+                Ada sesuatu yang sudah lama disiapkan<br>
+                khusus untuk seseorang yang istimewa.<br>
+                <strong>Dan seseorang itu adalah kamu.</strong>
+            </p>
+
+            <button id="startBtn">✦ Buka Kenangan Kita ✦</button>
+
+            <p class="music-note">
+                ♫ Klik tombolnya, pokoknya harus dengerin pakai lagu! ♫
+            </p>
+
+            <p class="closing">
+                One little story, a thousand feelings. 🤍
+            </p>
+        </section>
+    </main>
+
+    <script>
+        const box = document.getElementById("welcomeBox");
+        const startBtn = document.getElementById("startBtn");
+        const musik = document.getElementById("backgroundMusic");
+
+        startBtn.addEventListener("click", async function () {
+            startBtn.disabled = true;
+            startBtn.textContent = "✦ Membuka kenangan...";
+
+            // Putar lagu setelah tombol diklik
+            musik.src = "music/anugrah terindah.mp3";
+            musik.loop = true;
+            musik.volume = 0.5;
+
+            try {
+                await musik.play();
+            } catch (error) {
+                console.log("Musik belum bisa diputar:", error);
+            }
+
+            box.classList.add("hide");
+
+            for (let i = 0; i < 30; i++) {
+                const star = document.createElement("div");
+
+                star.className = "heart";
+                star.textContent = "✦";
+                star.style.left = Math.random() * 100 + "vw";
+                star.style.fontSize =
+                    (12 + Math.random() * 18) + "px";
+                star.style.animationDuration =
+                    (2 + Math.random() * 2) + "s";
+                star.style.animationDelay =
+                    Math.random() * .5 + "s";
+
+                document.body.appendChild(star);
+            }
+
+            setTimeout(() => {
+                window.location.href = "favorites.html";
+            }, 900);
+        });
+    </script>
+
+    <script src="js/music.js"></script>
+</body>
+</html>
